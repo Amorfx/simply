@@ -16,9 +16,9 @@
     },
     "scripts": {
         "post-update-cmd": [
-            "mv load.php wordpress/wp-content/mu-plugins/",
-            "mv wp-config.php wordpress/wp-content/",
-            "mv .env.example wordpress/wp-content/.env"
+            "cp load.php wordpress/wp-content/mu-plugins/",
+            "cp wp-config.php wordpress/",
+            "cp .env.example wordpress/.env"
         ]
     },
     "license": "MIT"
