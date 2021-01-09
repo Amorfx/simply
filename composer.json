@@ -7,7 +7,8 @@
         "johnpbloch/wordpress-core-installer": "^2.0",
         "composer/installers": "^1.9",
         "symfony/dotenv": "^5.1",
-        "clementdecou/simply-framework": "^0.1.0"
+        "clementdecou/simply-framework": "^0.1.0",
+        "clementdecou/simply-maker": "^0.1.0"
     },
     "extra": {
         "installer-paths": {
@@ -18,7 +19,8 @@
         "post-update-cmd": [
             "cp load.php wordpress/wp-content/mu-plugins/",
             "cp wp-config.php wordpress/",
-            "cp .env.example wordpress/.env"
+            "cp .env.example wordpress/.env",
+            "mv bin wordpress/"
         ]
     },
     "license": "MIT"
