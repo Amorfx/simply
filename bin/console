@@ -7,7 +7,8 @@ $application = new \Symfony\Component\Console\Application();
 $application->addCommands([
     new Simply\Maker\Command\MakeCommand(),
     new Simply\Maker\Command\MakePostType(),
+    new Simply\Maker\Command\MakePlugin(),
     new Simply\Maker\Command\MakeHook(),
-    new Simply\Maker\Command\ClearCacheCommand()
+    new Simply\Maker\Command\ClearCacheCommand(),
 ]);
 $application->run();
