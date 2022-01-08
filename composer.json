@@ -7,18 +7,23 @@
         "johnpbloch/wordpress-core-installer": "^2.0",
         "composer/installers": "^1.9",
         "symfony/dotenv": "^5.1",
-        "clementdecou/simply-framework": "^0.1"
+        "clementdecou/simply-framework": "^0.1",
+        "clementdecou/simply-maker": "^0.1"
     },
     "extra": {
         "installer-paths": {
             "wordpress/wp-content/mu-plugins/{$name}": ["clementdecou/simply-framework"]
         }
     },
+    "config": {
+        "optimize-autoloader": true
+    },
     "scripts": {
-        "post-update-cmd": [
-            "cp load.php wordpress/wp-content/mu-plugins/",
-            "cp wp-config.php wordpress/",
-            "cp .env.example wordpress/.env"
+        "post-create-project-cmd": [
+            "mv load.php wordpress/wp-content/mu-plugins/",
+            "mv wp-config.php wordpress/",
+            "mv .env.example wordpress/.env",
+            "mv bin wordpress/"
         ]
     },
     "license": "MIT"
