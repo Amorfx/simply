@@ -1,6 +1,6 @@
 {
     "name": "clementdecou/simply",
-    "description": "The boilerplate for wordpress project with simply framework",
+    "description": "The boilerplate for WordPress project with Simply Framework",
     "type": "project",
     "require": {
         "johnpbloch/wordpress-core": "^5.8",
