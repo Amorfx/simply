@@ -12,7 +12,7 @@
     },
     "extra": {
         "installer-paths": {
-            "wordpress/wp-content/mu-plugins/{$name}": ["clementdecou/simply-framework"]
+            "wordpress/wp-content/mu-plugins/{$name}": ["clementdecou/simply-framework", "clementdecou/simply-mvc"]
         }
     },
     "config": {
