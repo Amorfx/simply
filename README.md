@@ -9,4 +9,4 @@ The boilerplate for WordPress project. It integrates [WordPress](https://wordpre
 - Manage your plugins/themes and more with composer
 
 ## Installation
-[Read all the documentation of installation and more here](https://amorfx.github.io/simply-documentation/docs/getting-started/installation)
+[Read all the documentation of installation and more here](https://amorfx.github.io/simply-documentation/getting-started/installation)
