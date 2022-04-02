@@ -10,5 +10,7 @@ $application->addCommands([
     new Simply\Maker\Command\MakePlugin(),
     new Simply\Maker\Command\MakeHook(),
     new Simply\Maker\Command\ClearCacheCommand(),
+    new Simply\Maker\Command\MakeTheme(),
+
 ]);
 $application->run();
