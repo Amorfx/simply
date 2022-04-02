@@ -3,12 +3,12 @@
     "description": "The boilerplate for WordPress project with Simply Framework",
     "type": "project",
     "require": {
-        "johnpbloch/wordpress-core": "^5.8",
+        "johnpbloch/wordpress-core": "^5.9",
         "johnpbloch/wordpress-core-installer": "^2.0",
         "composer/installers": "^2.0",
         "symfony/dotenv": "^6.0",
-        "clementdecou/simply-framework": "^0.1",
-        "clementdecou/simply-maker": "^0.1"
+        "clementdecou/simply-framework": "^0.2",
+        "clementdecou/simply-maker": "^0.2"
     },
     "extra": {
         "installer-paths": {
