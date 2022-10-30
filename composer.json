@@ -23,8 +23,11 @@
     },
     "extra": {
         "installer-paths": {
-            "wordpress/wp-content/mu-plugins/{$name}": ["clementdecou/simply-framework", "clementdecou/simply-mvc"]
-        }
+            "web/content/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
+            "web/content/plugins/{$name}/": ["type:wordpress-plugin"],
+            "web/content/themes/{$name}/": ["type:wordpress-theme"]
+        },
+        "wordpress-install-dir": "web/wp"
     },
     "config": {
         "optimize-autoloader": true,
