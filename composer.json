@@ -34,12 +34,8 @@
         }
     },
     "scripts": {
-        "post-create-project-cmd": [
-            "mv load.php wordpress/wp-content/mu-plugins/",
-            "mv wp-config.php wordpress/",
-            "mv .env.example wordpress/.env",
-            "mv bin wordpress/",
-            "rm wordpress/wp-config-sample.php"
+        "post-root-package-install": [
+            "php -r \"copy('.env.example', '.env');\""
         ]
     }
 }
