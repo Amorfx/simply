@@ -13,11 +13,13 @@ define('APP_ROOT_CONFIG', $rootDir . '/config');
  */
 $webDir = $rootDir . '/web';
 
-function _simply_env_define(string $var, bool $required = false) {
+function _simply_env_define(string $var, bool $required = false, $default = null): void {
     if (isset($_ENV[$var]) && !defined($var)) {
         define($var, $_ENV[$var]);
     } elseif (true === $required && !defined($var) && !isset($_ENV[$var])) {
         throw new InvalidArgumentException('The env var ' . $var . ' must be defined in .env file.');
+    } elseif(!isset($_ENV[$var]) && !is_null($default)) {
+        define($var, $default);
     }
 }
 
@@ -47,6 +49,7 @@ _simply_env_define('DB_PASSWORD');
 
 /** MySQL hostname */
 define('DB_HOST', $_ENV['DB_HOST'] ?: 'localhost');
+
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', $_ENV['DB_CHARSET'] ?: 'utf8mb4');
 /** The Database Collate type. Don't change this if in doubt. */
@@ -56,13 +59,13 @@ define('DB_COLLATE', '');
  * Custom Settings
  */
 define('AUTOMATIC_UPDATER_DISABLED', true);
-define('DISABLE_WP_CRON', $_ENV['DISABLE_WP_CRON'] ?: false);
+_simply_env_define('DISABLE_WP_CRON', false, false);
 // Disable the plugin and theme file editor in the admin
 define('DISALLOW_FILE_EDIT', true);
 // Disable plugin and theme updates and installation from the admin
 define('DISALLOW_FILE_MODS', true);
 // Limit the number of post revisions that WordPress stores (true (default WP): store every revision)
-define('WP_POST_REVISIONS', $_ENV['WP_POST_REVISIONS'] ?: true);
+_simply_env_define('WP_POST_REVISIONS', false, true);
 
 /**
  * Authentication Unique Keys and Salts.
