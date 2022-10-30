@@ -2,6 +2,17 @@
     "name": "clementdecou/simply",
     "description": "The boilerplate for WordPress project with Simply Framework",
     "type": "project",
+    "license": "MIT",
+    "homepage": "https://amorfx.github.io/simply-documentation/",
+    "authors": [
+        {
+            "name": "Clément Décou",
+            "homepage": "https://github.com/Amorfx"
+        }
+    ],
+    "keywords": [
+        "simply", "composer", "wordpress", "wp", "wp-config"
+    ],
     "require": {
         "johnpbloch/wordpress-core": "^5.9",
         "johnpbloch/wordpress-core-installer": "^2.0",
@@ -30,6 +41,5 @@
             "mv bin wordpress/",
             "rm wordpress/wp-config-sample.php"
         ]
-    },
-    "license": "MIT"
+    }
 }

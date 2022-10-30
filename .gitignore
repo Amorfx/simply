@@ -1,4 +1,28 @@
-composer.phar
-/vendor/
-wordpress
-composer.lock
+# Application
+web/content/plugins/*
+!web/content/plugins/.gitkeep
+web/content/mu-plugins/*/
+web/content/themes/*
+!web/content/themes/.gitkeep
+web/content/upgrade
+web/content/uploads/*
+!web/content/uploads/.gitkeep
+web/content/cache/*
+
+# WordPress
+web/wp
+web/.htaccess
+
+# Logs
+*.log
+
+# Dotenv
+.env
+.env.*
+!.env.example
+
+# Composer
+/vendor
+
+# WP-CLI
+wp-cli.local.yml
