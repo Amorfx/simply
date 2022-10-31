@@ -5,5 +5,5 @@
  * See how install WordPress plugin with composer if you want to do that
  */
 return [
-    // my-muplugins-extension/myfile.php
+    '/simply-maker/entrypoint.php'
 ];
