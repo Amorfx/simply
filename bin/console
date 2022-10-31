@@ -1,16 +1,26 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/../wp-load.php';
+use Simply\Maker\Command\CommandsRegistry;
+use Symfony\Component\Console\Application;
 
-$application = new \Symfony\Component\Console\Application();
-$application->addCommands([
-    new Simply\Maker\Command\MakeCommand(),
-    new Simply\Maker\Command\MakePostType(),
-    new Simply\Maker\Command\MakePlugin(),
-    new Simply\Maker\Command\MakeHook(),
-    new Simply\Maker\Command\ClearCacheCommand(),
-    new Simply\Maker\Command\MakeTheme(),
+/**
+ * Not load full wp just files
+ */
+require __DIR__ . '/../web/wp/wp-load.php';
 
-]);
+if (!class_exists(CommandsRegistry::class)) {
+    throw new RuntimeException("Simply Maker extension must be loaded to use the CLI.");
+}
+
+$application = new Application();
+
+/**
+ * @var CommandsRegistry $registry
+ */
+$registry = Simply::get(CommandsRegistry::class);
+
+if ($registry->hasCommands()) {
+    $application->addCommands($registry->getCommands());
+}
 $application->run();

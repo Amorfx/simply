@@ -2,18 +2,40 @@
     "name": "clementdecou/simply",
     "description": "The boilerplate for WordPress project with Simply Framework",
     "type": "project",
+    "license": "MIT",
+    "homepage": "https://amorfx.github.io/simply-documentation/",
+    "authors": [
+        {
+            "name": "Clément Décou",
+            "homepage": "https://github.com/Amorfx"
+        }
+    ],
+    "keywords": [
+        "simply", "composer", "wordpress", "wp", "wp-config"
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org",
+            "only": ["wpackagist-plugin/*", "wpackagist-theme/*"]
+        }
+    ],
     "require": {
-        "johnpbloch/wordpress-core": "^5.9",
+        "johnpbloch/wordpress-core": "^6.0.3",
         "johnpbloch/wordpress-core-installer": "^2.0",
         "composer/installers": "^2.0",
-        "symfony/dotenv": "^6.0",
+        "symfony/dotenv": "^6.1",
+        "wpackagist-theme/twentytwentytwo": "^1.2",
         "clementdecou/simply-framework": "^0.2",
-        "clementdecou/simply-maker": "^0.2"
+        "clementdecou/simply-maker": "^0.3"
     },
     "extra": {
         "installer-paths": {
-            "wordpress/wp-content/mu-plugins/{$name}": ["clementdecou/simply-framework", "clementdecou/simply-mvc"]
-        }
+            "web/content/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
+            "web/content/plugins/{$name}/": ["type:wordpress-plugin"],
+            "web/content/themes/{$name}/": ["type:wordpress-theme"]
+        },
+        "wordpress-install-dir": "web/wp"
     },
     "config": {
         "optimize-autoloader": true,
@@ -23,13 +45,8 @@
         }
     },
     "scripts": {
-        "post-create-project-cmd": [
-            "mv load.php wordpress/wp-content/mu-plugins/",
-            "mv wp-config.php wordpress/",
-            "mv .env.example wordpress/.env",
-            "mv bin wordpress/",
-            "rm wordpress/wp-config-sample.php"
+        "post-root-package-install": [
+            "php -r \"copy('.env.example', '.env');\""
         ]
-    },
-    "license": "MIT"
+    }
 }
