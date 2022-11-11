@@ -21,11 +21,11 @@
         }
     ],
     "require": {
-        "johnpbloch/wordpress-core": "^6.0.3",
+        "johnpbloch/wordpress-core": "^6.1",
         "johnpbloch/wordpress-core-installer": "^2.0",
         "composer/installers": "^2.0",
         "symfony/dotenv": "^6.1",
-        "wpackagist-theme/twentytwentytwo": "^1.2",
+        "wpackagist-theme/twentytwentythree": "^1.0",
         "clementdecou/simply-framework": "^0.2",
         "clementdecou/simply-maker": "^0.3"
     },
