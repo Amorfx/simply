@@ -1,6 +1,5 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
-  ]
+  "commitMessageAction": "⬆️ Bump",
+  "commitMessageTopic": "{{depName}}",
+  "extends": ["config:base", "schedule:weekly"]
 }
