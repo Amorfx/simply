@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: roots/simply-docker
+          repository: Amorfx/simply-docker
           ref: main
           path: simply-docker
       - uses: actions/checkout@v2
