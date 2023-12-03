@@ -21,5 +21,5 @@ jobs:
 #        run: sleep 90
 #        working-directory: simply-docker
       - name: Verify install
-        run: docker run --network container:simply appropriate/curl -s --retry 10 --retry-connrefused http://127.0.0.1 | grep "<title>simply"
+        run: docker run --network container:simply curl -s -v http://127.0.0.1 | grep "<title>simply"
         working-directory: simply-docker
