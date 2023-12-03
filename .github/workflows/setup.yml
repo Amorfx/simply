@@ -17,9 +17,9 @@ jobs:
       - name: Build and run
         run: docker compose up --build -d
         working-directory: simply-docker
-      - name: Wait for install
-        run: sleep 90
-        working-directory: simply-docker
+#      - name: Wait for install
+#        run: sleep 90
+#        working-directory: simply-docker
       - name: Verify install
-        run: curl -s -v http://127.0.0.1 | grep "<title>simply"
+        run: docker run --network container:simply appropriate/curl -s --retry 10 --retry-connrefused http://127.0.0.1 | grep "<title>simply"
         working-directory: simply-docker
