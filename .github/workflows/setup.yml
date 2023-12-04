@@ -5,7 +5,6 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ubuntu
     steps:
       - uses: actions/checkout@v2
         with:
@@ -16,11 +15,11 @@ jobs:
         with:
           path: simply-docker/simply
       - name: Build and run
-        run: docker compose up --build -d
+        run: docker compose up --build --wait -d
         working-directory: simply-docker
-      - name: Wait for install
-        run: sleep 30
-        working-directory: simply-docker
+#      - name: Wait for install
+#        run: sleep 30
+#        working-directory: simply-docker
       - name: Verify install
         run: curl -s -v http://127.0.0.1 | grep "<title>simply"
         working-directory: simply-docker
