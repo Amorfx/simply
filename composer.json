@@ -26,8 +26,8 @@
         "composer/installers": "^2.0",
         "symfony/dotenv": "^6.4",
         "wpackagist-theme/twentytwentyfour": "^1.0",
-        "clementdecou/simply-framework": "^0.2.5",
-        "clementdecou/simply-maker": "0.3.3"
+        "clementdecou/simply-framework": "^0.2.7",
+        "clementdecou/simply-maker": "0.3.4"
     },
     "extra": {
         "installer-paths": {
