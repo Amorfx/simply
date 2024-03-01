@@ -17,6 +17,9 @@ jobs:
       - name: Build and run
         run: docker compose up --build -d
         working-directory: simply-docker
+      - name: LS
+        run: ls simply-docker/simply
+        working-directory: simply-docker
       - name: Wait for install
         run: sleep 30
         working-directory: simply-docker
