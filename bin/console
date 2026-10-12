@@ -5,7 +5,7 @@ use Simply\Maker\Command\CommandsRegistry;
 use Symfony\Component\Console\Application;
 
 /**
- * Not load full wp just files
+ * Load WordPress: the commands need the Simply container and the database
  */
 require __DIR__ . '/../web/wp/wp-load.php';
 
