@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Installs the dependencies and WordPress in the development environment. Safe to re-run.
-# Usage: docker compose exec -u www-data web docker/setup.sh
+# Usage: docker compose exec -u www-data web bash docker/setup.sh
 set -euo pipefail
 cd /var/www/project
 
@@ -18,13 +18,16 @@ done
 
 composer install --no-interaction
 
-if ! wp db check >/dev/null 2>&1; then
-    echo "Cannot reach the database: in .env, set DB_HOST=db and the DB_NAME, DB_USER, DB_PASSWORD used by compose.yaml." >&2
+if ! output=$(wp db check 2>&1); then
+    echo "$output" >&2
+    echo "Cannot use the database: in .env, set DB_HOST=db and the DB_NAME, DB_USER, DB_PASSWORD used by compose.yaml." >&2
+    echo "If you changed these values after the first start, recreate the database volume: docker compose down -v" >&2
     exit 1
 fi
 
 if ! wp core is-installed 2>/dev/null; then
-    home=$(php -r 'require "vendor/autoload.php"; require "config/application.php"; echo WP_HOME;')
+    # Notices go to stderr, so that they cannot end up in the URL
+    home=$(php -d display_errors=stderr -r 'require "vendor/autoload.php"; require "config/application.php"; echo WP_HOME;')
     wp core install \
         --url="${home}" \
         --title="Simply" \

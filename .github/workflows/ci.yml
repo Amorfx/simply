@@ -57,7 +57,7 @@ jobs:
         run: USER_ID=$(id -u) GROUP_ID=$(id -g) docker compose up -d --build --wait
 
       - name: Install
-        run: docker compose exec -T -u www-data web docker/setup.sh
+        run: docker compose exec -T -u www-data web bash docker/setup.sh
 
       - name: Check the site and the Simply commands
         run: |
