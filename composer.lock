@@ -59,16 +59,16 @@
         },
         {
             "name": "clementdecou/simply-maker",
-            "version": "v0.4.0",
+            "version": "v0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Amorfx/simply-maker.git",
-                "reference": "f74f164f3bfc2f11af9fd2e6a0a52efce508ec8e"
+                "reference": "676dae42cacc9714c4e204d1bae218c0fae5e53a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Amorfx/simply-maker/zipball/f74f164f3bfc2f11af9fd2e6a0a52efce508ec8e",
-                "reference": "f74f164f3bfc2f11af9fd2e6a0a52efce508ec8e",
+                "url": "https://api.github.com/repos/Amorfx/simply-maker/zipball/676dae42cacc9714c4e204d1bae218c0fae5e53a",
+                "reference": "676dae42cacc9714c4e204d1bae218c0fae5e53a",
                 "shasum": ""
             },
             "require": {
@@ -96,12 +96,12 @@
                 "MIT"
             ],
             "description": "Simply maker helps you create empty plugin, theme, hooks and more so you can forget about writing boilerplate code",
-            "homepage": "https://amorfx.github.io/simply-documentation/docs/simply-cli/intro",
+            "homepage": "https://amorfx.github.io/simply-documentation/",
             "support": {
                 "issues": "https://github.com/Amorfx/simply-maker/issues",
-                "source": "https://github.com/Amorfx/simply-maker/tree/v0.4.0"
+                "source": "https://github.com/Amorfx/simply-maker/tree/v0.4.1"
             },
-            "time": "2026-10-12T21:47:35+00:00"
+            "time": "2026-10-12T22:19:58+00:00"
         },
         {
             "name": "composer/installers",
