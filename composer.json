@@ -22,7 +22,7 @@
     ],
     "require": {
         "php": ">=8.2",
-        "johnpbloch/wordpress-core": "^6.1",
+        "johnpbloch/wordpress-core": "^7.0",
         "johnpbloch/wordpress-core-installer": "^2.0",
         "composer/installers": "^2.0",
         "symfony/dotenv": "^7.4",

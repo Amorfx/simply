@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de03f2903d9bdc8efe03beb78767c363",
+    "content-hash": "c6e8a092347c62f01339051a171cad4b",
     "packages": [
         {
             "name": "clementdecou/simply-framework",
@@ -250,24 +250,24 @@
         },
         {
             "name": "johnpbloch/wordpress-core",
-            "version": "6.9.10",
+            "version": "7.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "6dfe9e4da2ddc9ffe10945313c69299b0fe62ddc"
+                "reference": "326accad3c1f9aeef9d6e3503c24b5a5ca6ed094"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/6dfe9e4da2ddc9ffe10945313c69299b0fe62ddc",
-                "reference": "6dfe9e4da2ddc9ffe10945313c69299b0fe62ddc",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/326accad3c1f9aeef9d6e3503c24b5a5ca6ed094",
+                "reference": "326accad3c1f9aeef9d6e3503c24b5a5ca6ed094",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=7.2.24"
+                "php": ">=7.4"
             },
             "provide": {
-                "wordpress/core-implementation": "6.9.10"
+                "wordpress/core-implementation": "7.1.3"
             },
             "type": "wordpress-core",
             "notification-url": "https://packagist.org/downloads/",
@@ -294,7 +294,7 @@
                 "source": "https://core.trac.wordpress.org/browser",
                 "wiki": "https://codex.wordpress.org/"
             },
-            "time": "2026-10-06T20:19:44+00:00"
+            "time": "2026-10-06T20:20:01+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core-installer",
