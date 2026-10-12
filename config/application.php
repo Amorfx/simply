@@ -13,12 +13,17 @@ define('APP_ROOT_CONFIG', $rootDir . '/config');
  */
 $webDir = $rootDir . '/web';
 
-function _simply_env_define(string $var, bool $required = false, $default = null): void {
+function _simply_env_define(string $var, bool $required = false, $default = null, bool $boolean = false): void {
     if (isset($_ENV[$var]) && !defined($var)) {
-        define($var, $_ENV[$var]);
+        $value = $_ENV[$var];
+        // "true"/"false" from .env are strings: convert them for boolean settings only (a password may be "false")
+        if ($boolean) {
+            $value = filter_var($value, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE) ?? $value;
+        }
+        define($var, $value);
     } elseif (true === $required && !defined($var) && !isset($_ENV[$var])) {
         throw new InvalidArgumentException('The env var ' . $var . ' must be defined in .env file.');
-    } elseif(!isset($_ENV[$var]) && !is_null($default)) {
+    } elseif (!isset($_ENV[$var]) && !is_null($default) && !defined($var)) {
         define($var, $default);
     }
 }
@@ -30,7 +35,7 @@ $dotEnv->loadEnv($rootDir . '/.env');
  * URLs
  */
 _simply_env_define('WP_HOME', true);
-_simply_env_define('WP_SITEURL');
+_simply_env_define('WP_SITEURL', false, WP_HOME . '/wp');
 
 /**
  * Custom Content Directory
@@ -41,17 +46,17 @@ define('WP_CONTENT_URL', WP_HOME . CONTENT_DIR);
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-_simply_env_define('DB_NAME');
+_simply_env_define('DB_NAME', true);
 /** MySQL database username */
-_simply_env_define('DB_USER');
+_simply_env_define('DB_USER', true);
 /** MySQL database password */
-_simply_env_define('DB_PASSWORD');
+_simply_env_define('DB_PASSWORD', true);
 
 /** MySQL hostname */
-define('DB_HOST', $_ENV['DB_HOST'] ?: 'localhost');
+_simply_env_define('DB_HOST', false, 'localhost');
 
 /** Database Charset to use in creating database tables. */
-define('DB_CHARSET', $_ENV['DB_CHARSET'] ?: 'utf8mb4');
+_simply_env_define('DB_CHARSET', false, 'utf8mb4');
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
@@ -59,13 +64,13 @@ define('DB_COLLATE', '');
  * Custom Settings
  */
 define('AUTOMATIC_UPDATER_DISABLED', true);
-_simply_env_define('DISABLE_WP_CRON', false, false);
+_simply_env_define('DISABLE_WP_CRON', false, false, true);
 // Disable the plugin and theme file editor in the admin
 define('DISALLOW_FILE_EDIT', true);
 // Disable plugin and theme updates and installation from the admin
 define('DISALLOW_FILE_MODS', true);
 // Limit the number of post revisions that WordPress stores (true (default WP): store every revision)
-_simply_env_define('WP_POST_REVISIONS', false, true);
+_simply_env_define('WP_POST_REVISIONS', false, true, true);
 
 /**
  * Authentication Unique Keys and Salts.
@@ -90,7 +95,7 @@ _simply_env_define('WP_CACHE_KEY_SALT');
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix = $_ENV['DB_PREFIX'];
+$table_prefix = $_ENV['DB_PREFIX'] ?? 'wp_';
 
 /**
  * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer
@@ -100,7 +105,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROT
     $_SERVER['HTTPS'] = 'on';
 }
 
-define('WP_DEBUG', $_ENV['APP_DEBUG'] === 'true');
+define('WP_DEBUG', filter_var($_ENV['APP_DEBUG'] ?? false, FILTER_VALIDATE_BOOL));
 
 /** Absolute path to the WordPress directory. */
 if (!defined('ABSPATH')) {
