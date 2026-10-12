@@ -69,8 +69,17 @@ _simply_env_define('DISABLE_WP_CRON', false, false, true);
 define('DISALLOW_FILE_EDIT', true);
 // Disable plugin and theme updates and installation from the admin
 define('DISALLOW_FILE_MODS', true);
-// Limit the number of post revisions that WordPress stores (true (default WP): store every revision)
-_simply_env_define('WP_POST_REVISIONS', false, true, true);
+// Limit the number of post revisions that WordPress stores (true (default WP): store every revision, false: none, or a number)
+if (isset($_ENV['WP_POST_REVISIONS']) && !defined('WP_POST_REVISIONS')) {
+    $revisions = strtolower(trim($_ENV['WP_POST_REVISIONS']));
+    define('WP_POST_REVISIONS', match (true) {
+        $revisions === 'true' => true,
+        $revisions === 'false' => false,
+        is_numeric($revisions) => (int) $revisions,
+        default => $_ENV['WP_POST_REVISIONS'],
+    });
+}
+_simply_env_define('WP_POST_REVISIONS', false, true);
 
 /**
  * Authentication Unique Keys and Salts.
@@ -95,7 +104,8 @@ _simply_env_define('WP_CACHE_KEY_SALT');
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix = $_ENV['DB_PREFIX'] ?? 'wp_';
+// Required: a silent default could point an existing site to other tables
+$table_prefix = $_ENV['DB_PREFIX'] ?? throw new InvalidArgumentException('The env var DB_PREFIX must be defined in .env file.');
 
 /**
  * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer

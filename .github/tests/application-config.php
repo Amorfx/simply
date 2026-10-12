@@ -5,7 +5,7 @@
  */
 
 $root = dirname(__DIR__, 2);
-$base = "WP_HOME=http://example.test\nDB_NAME=wp\nDB_USER=wp\nDB_PASSWORD=wp\n";
+$base = "WP_HOME=http://example.test\nDB_NAME=wp\nDB_USER=wp\nDB_PASSWORD=wp\nDB_PREFIX=wp_\n";
 $cases = [
     'minimal .env' => [$base, ['WP_DEBUG' => false, 'DB_HOST' => 'localhost', 'DB_CHARSET' => 'utf8mb4', 'WP_SITEURL' => 'http://example.test/wp', 'WP_CONTENT_URL' => 'http://example.test/content', 'DISABLE_WP_CRON' => false]],
     'APP_DEBUG=1' => [$base . "APP_DEBUG=1\n", ['WP_DEBUG' => true]],
@@ -13,10 +13,15 @@ $cases = [
     'DISABLE_WP_CRON=false' => [$base . "DISABLE_WP_CRON=false\n", ['DISABLE_WP_CRON' => false]],
     'DISABLE_WP_CRON=true' => [$base . "DISABLE_WP_CRON=true\n", ['DISABLE_WP_CRON' => true]],
     'WP_POST_REVISIONS=false' => [$base . "WP_POST_REVISIONS=false\n", ['WP_POST_REVISIONS' => false]],
-    'WP_POST_REVISIONS=5' => [$base . "WP_POST_REVISIONS=5\n", ['WP_POST_REVISIONS' => '5']],
-    'empty DB_PASSWORD' => ["WP_HOME=http://example.test\nDB_NAME=wp\nDB_USER=wp\nDB_PASSWORD=\n", ['DB_PASSWORD' => '']],
+    'WP_POST_REVISIONS=5' => [$base . "WP_POST_REVISIONS=5\n", ['WP_POST_REVISIONS' => 5]],
+    'WP_POST_REVISIONS=1' => [$base . "WP_POST_REVISIONS=1\n", ['WP_POST_REVISIONS' => 1]],
+    'WP_POST_REVISIONS=0' => [$base . "WP_POST_REVISIONS=0\n", ['WP_POST_REVISIONS' => 0]],
+    'WP_POST_REVISIONS=true' => [$base . "WP_POST_REVISIONS=true\n", ['WP_POST_REVISIONS' => true]],
+    'empty DB_PASSWORD' => ["WP_HOME=http://example.test\nDB_NAME=wp\nDB_USER=wp\nDB_PASSWORD=\nDB_PREFIX=wp_\n", ['DB_PASSWORD' => '']],
+    'missing DB_PREFIX' => ["WP_HOME=http://example.test\nDB_NAME=wp\nDB_USER=wp\nDB_PASSWORD=wp\n", 'throws'],
+    'missing DB_NAME' => ["WP_HOME=http://example.test\nDB_USER=wp\nDB_PASSWORD=wp\nDB_PREFIX=wp_\n", 'throws'],
     'WP_SITEURL from .env' => [$base . "WP_SITEURL=http://cms.example.test\n", ['WP_SITEURL' => 'http://cms.example.test']],
-    'DB_PREFIX' => [$base . "DB_PREFIX=site_\n", ['table_prefix' => 'site_']],
+    'DB_PREFIX' => ["WP_HOME=http://example.test\nDB_NAME=wp\nDB_USER=wp\nDB_PASSWORD=wp\nDB_PREFIX=site_\n", ['table_prefix' => 'site_']],
 ];
 
 $failures = 0;
@@ -29,11 +34,16 @@ foreach ($cases as $label => [$env, $expected]) {
         'set_error_handler(function ($l, $m) { echo "WARNING: $m\n"; return true; }); require %s; require %s; $c = []; foreach (%s as $k) { $c[$k] = $k === "table_prefix" ? $table_prefix : (defined($k) ? constant($k) : "UNDEFINED"); } echo json_encode($c);',
         var_export($root . '/vendor/autoload.php', true),
         var_export($dir . '/config/application.php', true),
-        var_export(array_keys($expected), true)
+        var_export($expected === 'throws' ? [] : array_keys($expected), true)
     );
-    $output = (string) shell_exec('php -r ' . escapeshellarg($script) . ' 2>&1');
-    $actual = json_decode((string) substr($output, (int) strrpos($output, '{')), true);
-    $ok = !str_contains($output, 'WARNING') && $actual === $expected;
+    $output = (string) shell_exec(escapeshellarg(PHP_BINARY) . ' -r ' . escapeshellarg($script) . ' 2>&1');
+    if ($expected === 'throws') {
+        // A missing required variable must stop the configuration with an explicit message
+        $ok = str_contains($output, 'InvalidArgumentException') && !str_contains($output, 'WARNING');
+    } else {
+        $actual = json_decode((string) substr($output, (int) strrpos($output, '{')), true);
+        $ok = !str_contains($output, 'WARNING') && $actual === $expected;
+    }
     echo ($ok ? '[OK]   ' : '[FAIL] ') . $label . ($ok ? '' : ' => ' . trim($output)) . PHP_EOL;
     $failures += $ok ? 0 : 1;
 }

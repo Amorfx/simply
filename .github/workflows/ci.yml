@@ -35,7 +35,8 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-interaction --no-scripts
 
       - name: Lint PHP files
-        run: find config web/index.php web/wp-config.php web/content/mu-plugins/load.php bin/console -type f -exec php -l {} \;
+        # xargs fails when any file fails; php -l lints a single file per call before PHP 8.3
+        run: find config web/index.php web/wp-config.php web/content/mu-plugins/load.php bin/console -type f -print0 | xargs -0 -n1 php -l
 
       - name: Check config/application.php
         run: php .github/tests/application-config.php
