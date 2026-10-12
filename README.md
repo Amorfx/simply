@@ -5,6 +5,7 @@ A WordPress project boilerplate with [Simply framework](https://github.com/Amorf
 ## Requirements
 - PHP 8.2, 8.3 or 8.4
 - Composer 2
+- WordPress 6.1+ (new projects install WordPress 7)
 - MySQL 8+ or MariaDB 10.6+
 - A web server whose document root is the `web/` directory
 
