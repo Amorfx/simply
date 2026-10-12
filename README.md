@@ -20,6 +20,33 @@ Edit `.env` (created from `.env.example`):
 
 Point your web server to `web/`, then install WordPress from the browser or with WP-CLI (`wp core install`).
 
+## Development environment with Docker
+The project ships a development environment (PHP 8.4 with Apache, MariaDB). In `.env`, set:
+```
+WP_HOME=http://localhost:8080
+DB_HOST=db
+```
+Then:
+```bash
+docker compose up -d --build
+docker compose exec -u www-data web bash docker/setup.sh
+```
+`setup.sh` replaces the placeholder salts, installs the Composer dependencies and WordPress (admin account `admin`/`admin`). The site is on http://localhost:8080.
+
+Run the commands as `www-data`, so that the files they create belong to you:
+```bash
+docker compose exec -u www-data web php bin/console list simply
+docker compose exec -u www-data web wp plugin list
+```
+Settings, as environment variables or in `.env`:
+- `HTTP_PORT` (default `8080`);
+- `PHP_VERSION`: `8.2`, `8.3` or `8.4` (default), then `docker compose up -d --build`;
+- `USER_ID` / `GROUP_ID` on Linux, when your uid/gid is not 1000 (`id -u`, `id -g`).
+
+Compose reads only `.env` (not `.env.local`): keep the `DB_*` values there. With `DB_HOST=db`, run `bin/console` and `wp` through `docker compose exec`. To reset the database: `docker compose down -v`.
+
+This environment is for development only and is only reachable from your machine. On macOS, two PHP requests rebuilding the Simply cache at the very same time can fail once: reload the page.
+
 ## Project structure
 ```
 config/application.php   WordPress configuration, read from .env

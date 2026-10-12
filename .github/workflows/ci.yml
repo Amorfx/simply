@@ -40,3 +40,30 @@ jobs:
 
       - name: Check config/application.php
         run: php .github/tests/application-config.php
+
+  docker:
+    runs-on: ubuntu-latest
+    name: Docker development environment
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare .env
+        run: |
+          cp .env.example .env
+          sed -i 's#^WP_HOME=.*#WP_HOME=http://localhost:8080#; s#^DB_HOST=.*#DB_HOST=db#' .env
+
+      - name: Start
+        run: USER_ID=$(id -u) GROUP_ID=$(id -g) docker compose up -d --build --wait
+
+      - name: Install
+        run: docker compose exec -T -u www-data web bash docker/setup.sh
+
+      - name: Check the site and the Simply commands
+        run: |
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/)" = 200
+          docker compose exec -T -u www-data web php bin/console list simply | grep -q 'simply:cache:clear'
+
+      - name: Logs on failure
+        if: failure()
+        run: docker compose logs
