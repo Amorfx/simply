@@ -7,7 +7,6 @@ web/content/themes/*
 web/content/upgrade
 web/content/uploads/*
 !web/content/uploads/.gitkeep
-web/content/cache/*
 
 # WordPress
 web/wp

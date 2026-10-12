@@ -2,8 +2,7 @@
 /**
  * Plugin Name:  Simply framework
  * Plugin URI:   https://github.com/Amorfx/simply
- * Description:  Load Simply Framework and
- * Version:      0.2
+ * Description:  Load Simply framework and the Simply extensions listed in config/extensions.php
  * Author:       Clément Décou
  * Author URI:   https://www.clement-decou.fr/
  * License:      MIT License
