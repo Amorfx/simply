@@ -2,7 +2,7 @@
 # which must also contain DB_HOST=db. See README.md.
 services:
   db:
-    image: mariadb:11.4
+    image: mariadb:11.8
     environment:
       MARIADB_DATABASE: ${DB_NAME:?Set DB_NAME in .env (cp .env.example .env)}
       MARIADB_USER: ${DB_USER:?Set DB_USER in .env (cp .env.example .env)}
