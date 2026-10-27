@@ -8,5 +8,20 @@
   ],
   "constraints": {
     "php": "8.2.*"
-  }
+  },
+  "packageRules": [
+    {
+      "description": "The lock file must stay installable on the minimum supported PHP version",
+      "matchManagers": ["renovate-config"],
+      "matchDepTypes": ["tool-constraint"],
+      "enabled": false
+    },
+    {
+      "description": "Development stack versions are chosen by hand: PHP follows the CI matrix, MariaDB stays on an LTS",
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "matchDepNames": ["php", "mariadb"],
+      "matchUpdateTypes": ["major", "minor"],
+      "enabled": false
+    }
+  ]
 }
